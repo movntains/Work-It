@@ -1,5 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const Clock = styled.h1`
+  margin: 0px;
+  font-size: 80px;
+  font-weight: 100;
+  line-height: 80px;
+  color: #FFF;
+`;
+
+const Status = styled.p`
+  margin: 5px 0 20px 0;
+  color: #FFF;
+  opacity: 0.5;
+`;
 
 const renderTime = time => {
   const minutes = Math.floor(time / 60);
@@ -12,8 +27,8 @@ const renderTime = time => {
 const Time = props => {
   return (
     <div>
-      <h1 className="clock">{renderTime(props.time)}</h1>
-      <p className="status">{props.status}</p>
+      <Clock>{renderTime(props.time)}</Clock>
+      <Status>{props.status.toUpperCase()}</Status>
     </div>
   );
 };

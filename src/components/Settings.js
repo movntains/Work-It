@@ -1,22 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const SettingsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  p {
+    margin: 0px;
+  }
+`;
+
+const SettingsButtonRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const SettingsTime = styled.p`
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+`;
+
+const SettingsTitle = styled.p`
+  color: #14181D;
+`;
 
 const Settings = props => {
   return (
-    <div className="settings">
-      <div className="settings-btn-row">
+    <SettingsWrapper>
+      <SettingsButtonRow>
         <button>-</button>
-        <p className="settings-time">
+        <SettingsTime>
           {props.count}
-        </p>
+        </SettingsTime>
         <button>+</button>
-      </div>
+      </SettingsButtonRow>
       <div>
-        <p className="settings-title">
-          {props.title}
-        </p>
+        <SettingsTitle>
+          {props.title.toUpperCase()}
+        </SettingsTitle>
       </div>
-    </div>
+    </SettingsWrapper>
   );
 };
 
