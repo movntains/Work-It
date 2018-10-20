@@ -27,23 +27,25 @@ const SettingsTime = styled.p`
 `;
 
 const SettingsTitle = styled.p`
-  color: #14181D;
+  color: #14181d;
 `;
 
 const Settings = props => {
+  const { count, title, dec, inc } = props;
+
   return (
     <SettingsWrapper>
       <SettingsButtonRow>
-        <button>-</button>
-        <SettingsTime>
-          {props.count}
-        </SettingsTime>
-        <button>+</button>
+        <button type="button" onClick={dec}>
+          -
+        </button>
+        <SettingsTime>{count}</SettingsTime>
+        <button type="button" onClick={inc}>
+          +
+        </button>
       </SettingsButtonRow>
       <div>
-        <SettingsTitle>
-          {props.title.toUpperCase()}
-        </SettingsTitle>
+        <SettingsTitle>{title.toUpperCase()}</SettingsTitle>
       </div>
     </SettingsWrapper>
   );
@@ -51,7 +53,9 @@ const Settings = props => {
 
 Settings.propTypes = {
   title: PropTypes.string,
-  count: PropTypes.number
+  count: PropTypes.number,
+  dec: PropTypes.func,
+  inc: PropTypes.func
 };
 
 Settings.defaultProps = {

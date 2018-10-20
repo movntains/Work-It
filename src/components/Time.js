@@ -7,19 +7,21 @@ const Clock = styled.h1`
   font-size: 80px;
   font-weight: 100;
   line-height: 80px;
-  color: #FFF;
+  color: #fff;
 `;
 
 const Status = styled.p`
   margin: 5px 0 20px 0;
-  color: #FFF;
+  color: #fff;
   opacity: 0.5;
 `;
 
 const renderTime = time => {
   const minutes = Math.floor(time / 60);
-  const seconds = time - (minutes * 60);
-  const newTime = `${minutes.toString()}:${seconds < 10 ? '0' + seconds : seconds}`;
+  const seconds = time - minutes * 60;
+  const newTime = `${minutes.toString()}:${
+    seconds < 10 ? '0' + seconds : seconds
+  }`;
 
   return newTime;
 };

@@ -7,7 +7,7 @@ const SessionDiv = styled.div`
   &.session {
     height: 15px;
     width: 15px;
-    border: 2px solid #FFF;
+    border: 2px solid #fff;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0);
 
@@ -18,7 +18,8 @@ const SessionDiv = styled.div`
 `;
 
 const Session = props => {
-  const sessionClass = classnames('session', { completed: props.completed });
+  const { completed } = props;
+  const sessionClass = classnames('session', { completed });
 
   return <SessionDiv className={sessionClass} />;
 };

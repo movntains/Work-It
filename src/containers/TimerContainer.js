@@ -30,7 +30,7 @@ const ButtonsRow = styled.div`
 `;
 
 const SessionTitle = styled.p`
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.5;
 `;
 
@@ -58,37 +58,66 @@ class TimerContainer extends Component {
     sessionsCompleted: 0
   };
 
+  incSession = () => {
+    this.setState((prevState, props) => ({
+      sessionLength: prevState.sessionLength + 60,
+      timeLeft: prevState.timeLeft + 60
+    }));
+  };
+
+  decSession = () => {
+    this.setState((prevState, props) => ({
+      sessionLength: prevState.sessionLength - 60,
+      timeLeft: prevState.timeLeft - 60
+    }));
+  };
+
   render() {
+    const {
+      timeLeft,
+      isBreak,
+      sessionsGoal,
+      sessionsCompleted,
+      sessionLength,
+      breakLength
+    } = this.state;
+
     return (
       <Wrapper>
         <TimerBox>
-          <Time
-            time={this.state.timeLeft}
-            status={this.state.isBreak ? 'break' : 'work'}
-          />
+          <Time time={timeLeft} status={isBreak ? 'break' : 'work'} />
           <ButtonsRow>
             <Button title="start" />
             <Button title="reset" />
           </ButtonsRow>
           <SessionTitle>Sessions Today</SessionTitle>
           <SessionsRow>
-            {
-              Array.from({ length: this.state.sessionsGoal }, (v, i) => i)
-                .map((session, i) => {
-                  return (
-                    <Session
-                      key={i}
-                      completed={i + 1 <= this.state.sessionsCompleted}
-                    />
-                  );
-                })
-            }
+            {Array.from({ length: sessionsGoal }, (v, i) => i).map(
+              (session, i) => (
+                <Session key={i} completed={i + 1 <= sessionsCompleted} />
+              )
+            )}
           </SessionsRow>
         </TimerBox>
         <SettingsRow>
-            <Settings title="work" count={this.state.sessionLength / 60} />
-            <Settings title="break" count={this.state.breakLength / 60} />
-            <Settings title="sessions goal" count={this.state.sessionsGoal} />
+          <Settings
+            title="work"
+            count={sessionLength / 60}
+            inc={this.incSession}
+            dec={this.decSession}
+          />
+          <Settings
+            title="break"
+            count={breakLength / 60}
+            inc={this.incSession}
+            dec={this.decSession}
+          />
+          <Settings
+            title="sessions goal"
+            count={sessionsGoal}
+            inc={this.incSession}
+            dec={this.decSession}
+          />
         </SettingsRow>
       </Wrapper>
     );
