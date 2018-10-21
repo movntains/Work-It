@@ -28,11 +28,14 @@ const Btn = styled.button`
 `;
 
 const Button = props => {
-  return <Btn>{props.title.toUpperCase()}</Btn>;
+  const { title, handleClick } = props;
+
+  return <Btn onClick={handleClick}>{title.toUpperCase()}</Btn>;
 };
 
 Button.propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string,
+  handleClick: PropTypes.func
 };
 
 Button.defaultProps = {

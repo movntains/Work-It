@@ -20,17 +20,19 @@ const renderTime = time => {
   const minutes = Math.floor(time / 60);
   const seconds = time - minutes * 60;
   const newTime = `${minutes.toString()}:${
-    seconds < 10 ? '0' + seconds : seconds
+    seconds < 10 ? `0${seconds}` : seconds
   }`;
 
   return newTime;
 };
 
 const Time = props => {
+  const { time, status } = props;
+
   return (
     <div>
-      <Clock>{renderTime(props.time)}</Clock>
-      <Status>{props.status.toUpperCase()}</Status>
+      <Clock>{renderTime(time)}</Clock>
+      <Status>{status.toUpperCase()}</Status>
     </div>
   );
 };

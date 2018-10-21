@@ -49,7 +49,7 @@ class TimerContainer extends Component {
   // Times are in seconds
   state = {
     isRunning: false,
-    isPause: false,
+    isPaused: false,
     timeLeft: 1500,
     isBreak: false,
     sessionLength: 1500,
@@ -57,6 +57,10 @@ class TimerContainer extends Component {
     sessionsGoal: 10,
     sessionsCompleted: 0
   };
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   incSession = () => {
     this.setState((prevState, props) => ({
@@ -72,23 +76,111 @@ class TimerContainer extends Component {
     }));
   };
 
+  incBreak = () => {
+    this.setState((prevState, props) => ({
+      breakLength: prevState.breakLength + 60
+    }));
+  };
+
+  decBreak = () => {
+    this.setState((prevState, props) => ({
+      breakLength: prevState.breakLength - 60
+    }));
+  };
+
+  incGoal = () => {
+    this.setState((prevState, props) => ({
+      sessionsGoal: prevState.sessionsGoal + 1
+    }));
+  };
+
+  decGoal = () => {
+    this.setState((prevState, props) => ({
+      sessionsGoal: prevState.sessionsGoal - 1
+    }));
+  };
+
+  startTimer = () => {
+    this.setState({
+      isRunning: true,
+      isPaused: false
+    });
+
+    // Clear the interval to prevent duplicated intervals
+    clearInterval(this.interval);
+
+    // Create a new 1-second interval
+    this.interval = setInterval(() => {
+      this.setState(
+        (prevState, props) => ({ timeLeft: prevState.timeLeft - 1 }),
+        () => {
+          const { timeLeft, isBreak } = this.state;
+
+          if (timeLeft < 1) {
+            if (isBreak) {
+              this.setState((prevState, props) => ({
+                isBreak: false,
+                timeLeft: prevState.sessionLength
+              }));
+
+              this.startTimer();
+            } else {
+              this.setState((prevState, props) => ({
+                isBreak: true,
+                timeLeft: prevState.breakLength,
+                sessionsCompleted: prevState.sessionsCompleted + 1
+              }));
+            }
+          }
+        }
+      );
+    }, 1000);
+  };
+
+  pauseTimer = () => {
+    clearInterval(this.interval);
+
+    this.setState({
+      isRunning: false,
+      isPaused: true
+    });
+  };
+
+  resetTimer = () => {
+    clearInterval(this.interval);
+
+    this.setState((prevState, props) => ({
+      isRunning: false,
+      isPaused: false,
+      isBreak: false,
+      timeLeft: prevState.sessionLength
+    }));
+  };
+
   render() {
     const {
       timeLeft,
       isBreak,
+      isRunning,
+      isPaused,
       sessionsGoal,
       sessionsCompleted,
       sessionLength,
       breakLength
     } = this.state;
 
+    const time = isRunning || isPaused ? timeLeft : sessionLength;
+
     return (
       <Wrapper>
         <TimerBox>
-          <Time time={timeLeft} status={isBreak ? 'break' : 'work'} />
+          <Time time={time} status={isBreak ? 'break' : 'work'} />
           <ButtonsRow>
-            <Button title="start" />
-            <Button title="reset" />
+            <Button
+              title={isRunning ? 'pause' : 'start'}
+              handleClick={isRunning ? this.pauseTimer : this.startTimer}
+            />
+            <Button title="reset" handleClick={this.resetTimer} />
           </ButtonsRow>
           <SessionTitle>Sessions Today</SessionTitle>
           <SessionsRow>
@@ -109,14 +201,14 @@ class TimerContainer extends Component {
           <Settings
             title="break"
             count={breakLength / 60}
-            inc={this.incSession}
-            dec={this.decSession}
+            inc={this.incBreak}
+            dec={this.decBreak}
           />
           <Settings
             title="sessions goal"
             count={sessionsGoal}
-            inc={this.incSession}
-            dec={this.decSession}
+            inc={this.incGoal}
+            dec={this.decGoal}
           />
         </SettingsRow>
       </Wrapper>
