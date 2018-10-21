@@ -70,10 +70,16 @@ class TimerContainer extends Component {
   };
 
   decSession = () => {
-    this.setState((prevState, props) => ({
-      sessionLength: prevState.sessionLength - 60,
-      timeLeft: prevState.timeLeft - 60
-    }));
+    this.setState((prevState, props) => {
+      if (prevState.sessionLength > 60) {
+        return {
+          sessionLength: prevState.sessionLength - 60,
+          timeLeft: prevState.timeLeft - 60
+        };
+      }
+
+      return { sessionLength: 60, timeLeft: 60 };
+    });
   };
 
   incBreak = () => {
@@ -83,9 +89,13 @@ class TimerContainer extends Component {
   };
 
   decBreak = () => {
-    this.setState((prevState, props) => ({
-      breakLength: prevState.breakLength - 60
-    }));
+    this.setState((prevState, props) => {
+      if (prevState.breakLength >= 60) {
+        return { breakLength: prevState.breakLength - 60 };
+      }
+
+      return { breakLength: 60 };
+    });
   };
 
   incGoal = () => {
@@ -95,9 +105,13 @@ class TimerContainer extends Component {
   };
 
   decGoal = () => {
-    this.setState((prevState, props) => ({
-      sessionsGoal: prevState.sessionsGoal - 1
-    }));
+    this.setState((prevState, props) => {
+      if (prevState.sessionsGoal > 0) {
+        return { sessionsGoal: prevState.sessionsGoal - 1 };
+      }
+
+      return { sessionsGoal: 1 };
+    });
   };
 
   startTimer = () => {
@@ -184,29 +198,30 @@ class TimerContainer extends Component {
           </ButtonsRow>
           <SessionTitle>Sessions Today</SessionTitle>
           <SessionsRow>
-            {Array.from({ length: sessionsGoal }, (v, i) => i).map(
-              (session, i) => (
-                <Session key={i} completed={i + 1 <= sessionsCompleted} />
-              )
-            )}
+            {Array.from(
+              { length: sessionsGoal > 0 ? sessionsGoal : 1 },
+              (v, i) => i
+            ).map((session, i) => (
+              <Session key={i} completed={i + 1 <= sessionsCompleted} />
+            ))}
           </SessionsRow>
         </TimerBox>
         <SettingsRow>
           <Settings
             title="work"
-            count={sessionLength / 60}
+            count={sessionLength / 60 >= 1 ? sessionLength / 60 : 60 / 60}
             inc={this.incSession}
             dec={this.decSession}
           />
           <Settings
             title="break"
-            count={breakLength / 60}
+            count={breakLength / 60 >= 1 ? breakLength / 60 : 60 / 60}
             inc={this.incBreak}
             dec={this.decBreak}
           />
           <Settings
             title="sessions goal"
-            count={sessionsGoal}
+            count={sessionsGoal > 0 ? sessionsGoal : 1}
             inc={this.incGoal}
             dec={this.decGoal}
           />
