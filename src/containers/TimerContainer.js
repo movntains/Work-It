@@ -36,7 +36,9 @@ const SessionTitle = styled.p`
 
 const SessionsRow = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
+  max-width: 440px;
 `;
 
 const SettingsRow = styled.div`

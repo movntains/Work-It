@@ -7,6 +7,7 @@ const SessionDiv = styled.div`
   &.session {
     height: 15px;
     width: 15px;
+    margin: 12px;
     border: 2px solid #fff;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0);
