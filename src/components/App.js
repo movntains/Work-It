@@ -3,12 +3,39 @@ import styled from 'styled-components';
 
 import TimerContainer from '../containers/TimerContainer';
 
+const WaveWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5%;
+  background-color: #015871;
+`;
+
+const BottomWave = styled.div`
+  position: absolute;
+  top: -198px;
+  width: 6400px;
+  height: 198px;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg');
+  background-repeat: repeat-x;
+`;
+
+const TopWave = styled.div`
+  position: absolute;
+  top: -175px;
+  width: 6400px;
+  height: 198px;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg');
+  background-repeat: repeat-x;
+  opacity: 1;
+`;
+
 const AppWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-top: 75px;
-  font-family: 'Roboto', sans-serif;
   font-weight: 100;
   text-align: center;
 
@@ -23,10 +50,15 @@ const AppWrapper = styled.div`
 class App extends Component {
   render() {
     return (
-      <AppWrapper>
-        <h2>Work It || Pomodoro Timer</h2>
-        <TimerContainer />
-      </AppWrapper>
+      <>
+        <WaveWrapper>
+          <TopWave />
+          <BottomWave />
+        </WaveWrapper>
+        <AppWrapper>
+          <TimerContainer />
+        </AppWrapper>
+      </>
     );
   }
 }

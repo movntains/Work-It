@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import Time from '../components/Time';
 import Button from '../components/Button';
-import Session from '../components/Session';
 import Settings from '../components/Settings';
 
 const Wrapper = styled.div`
@@ -18,9 +17,6 @@ const TimerBox = styled.div`
   min-height: 100px;
   width: 500px;
   padding: 30px;
-  background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.35);
-  border-radius: 4px;
 `;
 
 const ButtonsRow = styled.div`
@@ -30,21 +26,39 @@ const ButtonsRow = styled.div`
 `;
 
 const SessionTitle = styled.p`
-  color: #ffffff;
-  opacity: 0.5;
+  color: #39393c;
+  opacity: 0.7;
 `;
 
 const SessionsRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  max-width: 440px;
+  max-width: 100px;
+  margin: 0 auto;
+`;
+
+const CompletedSessions = styled.div`
+  font-size: 20px;
+  color: #39393c;
+`;
+
+const SessionDivider = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  color: #39393c;
+`;
+
+const SessionsGoal = styled.div`
+  font-size: 20px;
+  color: #39393c;
 `;
 
 const SettingsRow = styled.div`
   display: flex;
   width: 500px;
   margin-top: 20px;
+  z-index: 1000;
 `;
 
 class TimerContainer extends Component {
@@ -200,12 +214,9 @@ class TimerContainer extends Component {
           </ButtonsRow>
           <SessionTitle>Sessions Today</SessionTitle>
           <SessionsRow>
-            {Array.from(
-              { length: sessionsGoal > 0 ? sessionsGoal : 1 },
-              (v, i) => i
-            ).map((session, i) => (
-              <Session key={i} completed={i + 1 <= sessionsCompleted} />
-            ))}
+            <CompletedSessions>{sessionsCompleted}</CompletedSessions>
+            <SessionDivider>/</SessionDivider>
+            <SessionsGoal>{sessionsGoal > 0 ? sessionsGoal : 1}</SessionsGoal>
           </SessionsRow>
         </TimerBox>
         <SettingsRow>

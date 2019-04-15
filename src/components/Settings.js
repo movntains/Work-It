@@ -6,6 +6,7 @@ const SettingsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 100%;
 
   p {
     margin: 0px;
@@ -18,16 +19,31 @@ const SettingsButtonRow = styled.div`
   justify-content: space-around;
   align-items: center;
   margin-bottom: 10px;
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    svg {
+      fill: #39393c;
+    }
+
+    &:focus {
+      outline: 0;
+    }
+  }
 `;
 
 const SettingsTime = styled.p`
   font-size: 24px;
-  font-weight: 500;
-  color: #333;
+  font-weight: 400;
+  color: #39393c;
+  opacity: 0.85;
 `;
 
 const SettingsTitle = styled.p`
-  color: #14181d;
+  color: #39393c;
 `;
 
 const Settings = props => {
@@ -37,11 +53,25 @@ const Settings = props => {
     <SettingsWrapper>
       <SettingsButtonRow>
         <button type="button" onClick={dec}>
-          -
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            width="20"
+            height="20"
+          >
+            <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm5-9v2H5V9h10z" />
+          </svg>
         </button>
         <SettingsTime>{count}</SettingsTime>
         <button type="button" onClick={inc}>
-          +
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            width="20"
+            height="20"
+          >
+            <path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" />
+          </svg>
         </button>
       </SettingsButtonRow>
       <div>

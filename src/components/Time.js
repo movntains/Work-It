@@ -7,13 +7,14 @@ const Clock = styled.h1`
   font-size: 80px;
   font-weight: 100;
   line-height: 80px;
-  color: #fff;
+  color: #39393c;
+  letter-spacing: 3px;
 `;
 
 const Status = styled.p`
   margin: 5px 0 20px 0;
-  color: #fff;
-  opacity: 0.5;
+  color: #39393c;
+  opacity: 0.7;
 `;
 
 const renderTime = time => {
